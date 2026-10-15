@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://dlw3q2nn0xlr7"]
+
+[ext_resource type="Script" uid="uid://wuvdjx1ucieh" path="res://addons/curvyconveyors/conveyor_builder.gd" id="1_wrxtx"]
+[ext_resource type="Script" uid="uid://dnw7dx3xvo0c4" path="res://addons/curvyconveyors/conveyor_port.gd" id="2_cqq71"]
+[ext_resource type="PackedScene" uid="uid://cnnx8ogxidjch" path="res://demo/button-floor-round.glb" id="3_d70j4"]
+[ext_resource type="Script" uid="uid://nvqyvmwvn41m" path="res://demo/scripts/interactable.gd" id="4_7a6vi"]
+[ext_resource type="Script" uid="uid://djx3gpgntb316" path="res://demo/scripts/player.gd" id="5_au1l0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_color = Color(0.14767182, 0.14767179, 0.14767179, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_75xsh"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5luch"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_75xsh"]
+size = Vector3(5, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0.5687056, 0.47222447, 0.16652852, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iglim"]
+size = Vector3(0.6386719, 0.4169922, 0.6269531)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k53pf"]
+size = Vector3(5, 2, 3)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_75xsh"]
+
+[node name="Node3D" type="Node3D" unique_id=643660127]
+
+[node name="ConveyorBuilder" type="Node3D" parent="." unique_id=1938330182]
+script = ExtResource("1_wrxtx")
+conveyor_material = SubResource("StandardMaterial3D_lquwl")
+
+[node name="Environment" type="Node" parent="." unique_id=1564895464]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=882508812]
+transform = Transform3D(0.8756161, -0.32357374, 0.3586036, 0, 0.74243855, 0.66991425, -0.48300776, -0.5865876, 0.6500912, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment" unique_id=1156575778]
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment" unique_id=375352407]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D" unique_id=286926687]
+shape = SubResource("BoxShape3D_75xsh")
+
+[node name="Machine2" type="Node3D" parent="." unique_id=290586506]
+transform = Transform3D(0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.25881907, 4.834751, 1.0000019, -3.4051723)
+
+[node name="ConveyorPort" type="Area3D" parent="Machine2" unique_id=761998517]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.5, -0.45, 1.5)
+script = ExtResource("2_cqq71")
+direction = 1
+metadata/_custom_type_script = "uid://dnw7dx3xvo0c4"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machine2/ConveyorPort" unique_id=320203293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("BoxMesh_5luch")
+surface_material_override/0 = SubResource("StandardMaterial3D_h2yge")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machine2" unique_id=1424130961]
+mesh = SubResource("BoxMesh_75xsh")
+surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
+
+[node name="Label3D" type="Label3D" parent="Machine2" unique_id=1124495567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.716786, 1.5020573)
+text = "Item Maker 3000"
+
+[node name="Label3D2" type="Label3D" parent="Machine2" unique_id=146120139]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.5446975, 0.06399846, -0.47224352)
+text = "Press to make item!"
+
+[node name="button-floor-round2" parent="Machine2" unique_id=87233824 instance=ExtResource("3_d70j4")]
+transform = Transform3D(4.37114e-08, 1.0000001, 4.371138e-08, 8.7422784e-08, -4.3711395e-08, 1, 1.0000001, -4.3711392e-08, -8.742278e-08, 2.5, -1.110223e-16, 0.83140516)
+
+[node name="Area3D" type="Area3D" parent="Machine2/button-floor-round2" unique_id=647851729 node_paths=PackedStringArray("conveyor")]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("4_7a6vi")
+conveyor = NodePath("../../ConveyorPort")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine2/button-floor-round2/Area3D" unique_id=1641777328]
+transform = Transform3D(1, 0, -9.7699626e-14, 0, 1, 2.3092639e-14, -1.7763568e-15, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_iglim")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Machine2" unique_id=1653016596]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine2/StaticBody3D" unique_id=1735784946]
+shape = SubResource("BoxShape3D_k53pf")
+
+[node name="Machine3" type="Node3D" parent="." unique_id=1819998201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1652489, 1.0000019, -5.4051723)
+
+[node name="ConveyorPort" type="Area3D" parent="Machine3" unique_id=1533620930]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.5, -0.45, 1.5)
+script = ExtResource("2_cqq71")
+metadata/_custom_type_script = "uid://dnw7dx3xvo0c4"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machine3/ConveyorPort" unique_id=422679461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("BoxMesh_5luch")
+surface_material_override/0 = SubResource("StandardMaterial3D_h2yge")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Machine3" unique_id=1549493816]
+mesh = SubResource("BoxMesh_75xsh")
+surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
+
+[node name="Label3D" type="Label3D" parent="Machine3" unique_id=1653205528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.716786, 1.5020573)
+text = "Item Eater 3000"
+
+[node name="Label3D2" type="Label3D" parent="Machine3" unique_id=272814016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6779032, 0.06399846, 1.5080256)
+text = "Press to eat item!"
+
+[node name="button-floor-round2" parent="Machine3" unique_id=1746892944 instance=ExtResource("3_d70j4")]
+transform = Transform3D(-1.0000001, 3.5527137e-15, 8.7422784e-08, 8.742279e-08, -4.37114e-08, 1, 1.0658141e-14, 1.0000001, 4.371139e-08, -1.9815516, 0, 1.4633279)
+
+[node name="Area3D" type="Area3D" parent="Machine3/button-floor-round2" unique_id=1120177162 node_paths=PackedStringArray("conveyor")]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("4_7a6vi")
+conveyor = NodePath("../../ConveyorPort")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine3/button-floor-round2/Area3D" unique_id=89038326]
+transform = Transform3D(1, 0, -9.7699626e-14, 0, 1, 2.3092639e-14, -1.7763568e-15, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_iglim")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Machine3" unique_id=1472428283]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine3/StaticBody3D" unique_id=536769421]
+shape = SubResource("BoxShape3D_k53pf")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=348597095 node_paths=PackedStringArray("cb")]
+script = ExtResource("5_au1l0")
+cb = NodePath("../ConveyorBuilder")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=1214959244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="ConveyorRaycast" type="RayCast3D" parent="Player/Camera3D" unique_id=165919552]
+target_position = Vector3(0, 0, -10)
+debug_shape_thickness = 1
+
+[node name="InteractionRaycast" type="RayCast3D" parent="Player/Camera3D" unique_id=284382075]
+target_position = Vector3(0, 0, -10)
+collision_mask = 17
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_thickness = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=319132945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_75xsh")
